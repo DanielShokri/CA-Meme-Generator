@@ -5,6 +5,7 @@
 body {
     margin: 0;
     padding: 0;
+    font-family: natoSans;
 }
 
 @font-face {
@@ -19,6 +20,14 @@ h1 {
     text-align: center;
 }
 
+button {
+    margin: 0 auto;
+}
+
+input {
+    margin: 15px auto;
+}
+
 nav {
     min-width: 100%;
     background-color: #5bd1d7;
@@ -28,11 +37,14 @@ nav {
 /* Layout */
 
 .container {
-    max-width: 981px;
-    margin: 10px auto;
+    max-width: 980px;
+    margin: 50px auto;
 }
 
 .control-section {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
     width: 100%;
     border: 1px solid black;
     background-color: #348498;
@@ -42,18 +54,65 @@ nav {
 /* Canvas */
 
 canvas {
-    border: 1px solid black;
+    border: 1px dashed #454d66;
+    box-shadow: 0px 0px 10px 0px rgba(155, 163, 162, 1);
 }
 
 /* Control Section */
-.control-section h2{
+
+.control-section h2 {
     margin: 5px auto;
     text-align: center;
 }
 
+[type="file"] {
+    height: 0;
+    overflow: hidden;
+    width: 0;
+}
 
+.file {
+    background: #5bd1d7;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    cursor: pointer;
+    display: inline-block;
+    max-width: 200px;
+    height: 50px;
+    font-size: inherit;
+    margin: .6rem auto;
+    outline: none;
+    transition: all 0.3s;
+}
 
+.file:hover {
+    background: #f15d22;
+    border: #fff 1px solid;
+}
 
+.file::after {
+    content: 'Upload Image ⇑';
+}
+
+.save-img {
+    text-decoration: none;
+    cursor: pointer;
+    background-color: #f15d22;
+    max-width: 200px;
+    height: 50px;
+    border-radius: 5px;
+    padding: 12px;
+    margin: 0 auto;
+    transition: all 0.3s;
+    color: #fff;
+}
+
+.save-img:hover {
+    color: #454d66;
+    background-color: #5bd1d7;
+    border: #fff 1px solid;
+}
 /* Helpers */
 
 .flex {

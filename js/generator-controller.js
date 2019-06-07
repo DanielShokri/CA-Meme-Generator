@@ -2,21 +2,23 @@
 
 let gCanvas;
 let gCtx;
-let gImg = new Image();
+let gImg;
 let gTextTitle = '';
+let gTextTitleBottom = '';
+let gColor = '#FFFFFF';
 let gMemes;
 
 
 function onInit() {
+    gImg = new Image();
+    gImg.crossOrigin = "Anonymous";
     defineCanvas();
     drawPlaceholder();
 }
 
 function defineCanvas() {
     gCanvas = document.querySelector('#my-canvas');
-    gCtx = gCanvas.getContext('2d')
-    gCanvas.width = window.innerWidth - 600;
-    gCanvas.height = window.innerHeight - 300;
+    gCtx = gCanvas.getContext('2d');
 }
 
 
@@ -45,36 +47,44 @@ function drawOverlay(img) {
 }
 
 function drawText(txtSize) {
-
     gCtx.beginPath();
     // gCtx.textAlign = "center";
     gCtx.font = txtSize + 'px ' + 'Impact';
-    
-    gCtx.fillStyle = 'white';
+
+    gCtx.fillStyle = gColor;
     gCtx.lineWidth = 6;
 
-    gCtx.strokeText(gTextTitle, 70, 70);
-    gCtx.fillText(gTextTitle, 70, 70);
+    gCtx.strokeText(gTextTitle, 100, 70);
+    gCtx.fillText(gTextTitle, 100, 70);
+
+    gCtx.strokeText(gTextTitleBottom, 100, 450);
+    gCtx.fillText(gTextTitleBottom, 100, 450);
 }
 
 function dynamicText(img) {
-    document.querySelector('.name').addEventListener('keydown', function () {
-        drawOverlay(img);
-        drawText();
+    document.querySelector('.line-top').addEventListener('keydown', function () {
         gTextTitle = this.value;
+        drawOverlay(img);
         gCtx.fillText(gTextTitle, 70, 70);
+        drawText();
+    });
+    document.querySelector('.line-bottom').addEventListener('keydown', function () {
+        gTextTitleBottom = this.value;
+        drawOverlay(img);
+        gCtx.fillText(gTextTitleBottom, 200, 100);
+        drawText();
     });
     document.querySelector('.font-size').addEventListener('input', function () {
         let txtSize = document.querySelector('.font-size').value;
         drawOverlay(img);
         drawText(txtSize);
     });
-    // document.querySelector('.user-color').addEventListener('change', function () {
-    //     console.log('Sucsses');
-    //     drawOverlay(img);
-    //     let txtColor = document.querySelector('user-color').value;
-    //     drawText(txtColor);
-    // });
+    document.querySelector('.user-color').addEventListener('change', function () {
+        let txtColor = document.querySelector('.user-color').value;
+        drawOverlay(img);
+        gColor = txtColor;
+        drawText();
+    });
 }
 
 function handleImage(ev, onImageReady) {
@@ -97,3 +107,8 @@ function handleImage(ev, onImageReady) {
     reader.readAsDataURL(ev.target.files[0]);
 }
 
+function onDownloadImg(elLink,ev) {
+    ev.stopPropagation();
+    let imgContent = gCanvas.toDataURL('image/jpeg');
+    elLink.href = imgContent;
+}

@@ -5,8 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script data-search-pseudo-elements src="https://kit.fontawesome.com/468f3017f2.js"></script>
     <link rel="stylesheet" href="css/main.css">
-    <title>Meme Generator</title>
+    <title>Meme Generator | Create Your Own Meme</title>
 </head>
 
 <body onload="onInit()">
@@ -21,28 +22,33 @@
             Update your browser to enjoy canvas!
         </canvas>
         <section class="control-section">
-                <h2>Controls</h2>
-                <input type="file" name="image" onchange="onFileInputChange(event)" />
-                <form action="" method="POST" enctype="multipart/form-data" onsubmit="uploadImg(this, event)">
-                    <input name="img" id="imgData" type="hidden" />
-                </form>
-                <div class="control-tools">
-                    
-                </div>
-            <Label>text:
-                <input type="text" class="name">
+            <h2>Controls</h2><label class="file">
+                <input type="file" name="image" id="file" onchange="onFileInputChange(event)" />
+                <span class="file-custom"></span>
+            </label>
+            <form action="" method="POST" enctype="multipart/form-data" onsubmit="uploadImg(this, event)">
+                <input name="img" id="imgData" type="hidden"/>
+            </form>
+            <div class="control-tools">
+
+            </div>
+            <Label>Top Line:
+                <input type="text" class="line-top"> <button>⇧</button><button>⇩</button>
             </Label>
-            <button>Save Image</button>
+            <label>Bottom Line:
+                <input type="text" class="line-bottom"> <button>⇧</button><button>⇩</button>
+            </label>
             <label>Font size:
-                <input type="range" class="font-size" min="10" max="50">
+                <input type="range" class="font-size" value="50" min="30" max="60">
             </label>
             <label>Color:
-                <input type="color" class="user-color">
+                <input type="color" class="user-color" value="#ff0000">
             </label>
-            <button onclick="onAddLine()">Add Line</!-->
-            <div class="render-line"> -->
-                <!-- <!-- Rendering new line -->
-            </div>
+            <a class="save-img" onclick="onDownloadImg(this, event)" download="my-img.jpg">Save Image ⇓</a>
+            <!-- <button onclick="onAddLine()">Add Line</!-->
+            <div class="render-line">
+                <!-- Rendering new line -->
+                <!-- </div> -->
         </section>
     </section>
 
