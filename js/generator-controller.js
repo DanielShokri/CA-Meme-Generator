@@ -3,9 +3,6 @@
 let gCanvas;
 let gCtx;
 let gImg;
-let gTextTitle = '';
-let gTextTitleBottom = '';
-let gColor = '#FFFFFF';
 let gMemes;
 
 
@@ -13,6 +10,8 @@ function onInit() {
     gImg = new Image();
     gImg.crossOrigin = "Anonymous";
     defineCanvas();
+    gMemes = userMemesSetting();
+    console.log(gMemes);   
     drawPlaceholder();
 }
 
@@ -27,10 +26,10 @@ function drawPlaceholder() {
     gImg.onload = function () {
         drawOverlay(gImg);
         drawText();
-        dynamicText(gImg)
+        dynamicText(gImg);
     };
     //Get random Picture every startup
-    gImg.src = 'https://unsplash.it/400/400/?random';
+    gImg.src = 'https://loremflickr.com/500/500/funny';
 }
 
 function renderCanvasImg(img) {
@@ -46,46 +45,68 @@ function drawOverlay(img) {
     gCtx.fillStyle = 'rgba(50, 144, 255, 0.01)';
 }
 
-function drawText(txtSize) {
+function drawText() {
     gCtx.beginPath();
     // gCtx.textAlign = "center";
-    gCtx.font = txtSize + 'px ' + 'Impact';
+    gCtx.font = gMemes.size + 'px ' + 'Impact';
 
-    gCtx.fillStyle = gColor;
+    gCtx.fillStyle = gMemes.color;
     gCtx.lineWidth = 6;
 
-    gCtx.strokeText(gTextTitle, 100, 70);
-    gCtx.fillText(gTextTitle, 100, 70);
+    gCtx.strokeText(gMemes[0][0].line, gMemes[0][0].x, gMemes[0][0].y);
+    gCtx.fillText(gMemes[0][0].line, gMemes[0][0].x, gMemes[0][0].y);
 
-    gCtx.strokeText(gTextTitleBottom, 100, 450);
-    gCtx.fillText(gTextTitleBottom, 100, 450);
+    gCtx.strokeText(gMemes[1][0].line, gMemes[1][0].x, gMemes[1][0].y);
+    gCtx.fillText(gMemes[1][0].line, gMemes[1][0].x, gMemes[1][0].y);
 }
+
 
 function dynamicText(img) {
     document.querySelector('.line-top').addEventListener('keydown', function () {
-        gTextTitle = this.value;
+        gMemes[0][0].line = this.value;
         drawOverlay(img);
-        gCtx.fillText(gTextTitle, 70, 70);
+        gCtx.fillText(gMemes[0][0].line, 70, 70);
         drawText();
     });
     document.querySelector('.line-bottom').addEventListener('keydown', function () {
-        gTextTitleBottom = this.value;
+        gMemes[1][0].line = this.value;
         drawOverlay(img);
-        gCtx.fillText(gTextTitleBottom, 200, 100);
+        gCtx.fillText(gMemes[1][0].line, 70, 70);
         drawText();
     });
     document.querySelector('.font-size').addEventListener('input', function () {
-        let txtSize = document.querySelector('.font-size').value;
+        gMemes.size = document.querySelector('.font-size').value;
         drawOverlay(img);
-        drawText(txtSize);
+        drawText();
     });
     document.querySelector('.user-color').addEventListener('change', function () {
-        let txtColor = document.querySelector('.user-color').value;
+        gMemes.color = document.querySelector('.user-color').value;
         drawOverlay(img);
-        gColor = txtColor;
         drawText();
     });
 }
+
+
+function onMoveRight(num) {
+    let memeNum = gMemes.find(meme => {
+        return num === meme[0].id
+    });
+    console.log(memeNum[0].x)
+    memeNum[0].x += 5;
+    drawOverlay(gImg);
+    drawText();
+}
+
+function onMoveLeft(num) {
+    let memeNum = gMemes.find(meme => {
+        return num === meme[0].id
+    });
+    console.log(memeNum[0].x)
+    memeNum[0].x -= 5;
+    drawOverlay(gImg);
+    drawText();
+}
+
 
 function handleImage(ev, onImageReady) {
     let reader = new FileReader();
@@ -107,7 +128,7 @@ function handleImage(ev, onImageReady) {
     reader.readAsDataURL(ev.target.files[0]);
 }
 
-function onDownloadImg(elLink,ev) {
+function onDownloadImg(elLink, ev) {
     ev.stopPropagation();
     let imgContent = gCanvas.toDataURL('image/jpeg');
     elLink.href = imgContent;

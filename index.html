@@ -33,10 +33,10 @@
 
             </div>
             <Label>Top Line:
-                <input type="text" class="line-top"> <button>⇧</button><button>⇩</button>
+                <input type="text" class="line-top"> <button onclick="onMoveRight(0)">⇨</button> <button onclick="onMoveLeft(0)">⇦</button>
             </Label>
             <label>Bottom Line:
-                <input type="text" class="line-bottom"> <button>⇧</button><button>⇩</button>
+                <input type="text" class="line-bottom"> <button onclick="onMoveRight(1)">⇨</button> <button onclick="onMoveLeft(1)">⇦</button>
             </label>
             <label>Font size:
                 <input type="range" class="font-size" value="50" min="30" max="60">
