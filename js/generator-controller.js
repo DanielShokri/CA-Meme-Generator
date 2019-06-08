@@ -3,15 +3,13 @@
 let gCanvas;
 let gCtx;
 let gImg;
-let gMemes;
 
 
 function onInit() {
     gImg = new Image();
     gImg.crossOrigin = "Anonymous";
     defineCanvas();
-    gMemes = userMemesSetting();
-    console.log(gMemes);   
+    userMemesSetting();    
     drawPlaceholder();
 }
 
@@ -46,41 +44,44 @@ function drawOverlay(img) {
 }
 
 function drawText() {
+    let meme = getMemes();
+    
     gCtx.beginPath();
-    // gCtx.textAlign = "center";
-    gCtx.font = gMemes.size + 'px ' + 'Impact';
-
-    gCtx.fillStyle = gMemes.color;
+    gCtx.textAlign = "left";
+    gCtx.font = meme.size + 'px ' + meme[0].fontFamily;
+    
     gCtx.lineWidth = 6;
+    gCtx.fillStyle = meme.color;
 
-    gCtx.strokeText(gMemes[0][0].line, gMemes[0][0].x, gMemes[0][0].y);
-    gCtx.fillText(gMemes[0][0].line, gMemes[0][0].x, gMemes[0][0].y);
-
-    gCtx.strokeText(gMemes[1][0].line, gMemes[1][0].x, gMemes[1][0].y);
-    gCtx.fillText(gMemes[1][0].line, gMemes[1][0].x, gMemes[1][0].y);
+    gCtx.strokeText(meme[0][0].line, meme[0][0].x, meme[0][0].y);
+    gCtx.fillText(meme[0][0].line, meme[0][0].x, meme[0][0].y);
+    
+    gCtx.strokeText(meme[1][0].line, meme[1][0].x, meme[1][0].y);
+    gCtx.fillText(meme[1][0].line, meme[1][0].x, meme[1][0].y);
 }
 
 
 function dynamicText(img) {
+    let meme = getMemes();
     document.querySelector('.line-top').addEventListener('keydown', function () {
-        gMemes[0][0].line = this.value;
+        meme[0][0].line = this.value;
         drawOverlay(img);
-        gCtx.fillText(gMemes[0][0].line, 70, 70);
+        gCtx.fillText(meme[0][0].line, 70, 70);
         drawText();
     });
     document.querySelector('.line-bottom').addEventListener('keydown', function () {
-        gMemes[1][0].line = this.value;
+        meme[1][0].line = this.value;
         drawOverlay(img);
-        gCtx.fillText(gMemes[1][0].line, 70, 70);
+        gCtx.fillText(meme[1][0].line, 70, 70);
         drawText();
     });
     document.querySelector('.font-size').addEventListener('input', function () {
-        gMemes.size = document.querySelector('.font-size').value;
+        meme.size = document.querySelector('.font-size').value;
         drawOverlay(img);
         drawText();
     });
     document.querySelector('.user-color').addEventListener('change', function () {
-        gMemes.color = document.querySelector('.user-color').value;
+        meme.color = document.querySelector('.user-color').value;
         drawOverlay(img);
         drawText();
     });
@@ -88,25 +89,34 @@ function dynamicText(img) {
 
 
 function onMoveRight(num) {
-    let memeNum = gMemes.find(meme => {
-        return num === meme[0].id
-    });
-    console.log(memeNum[0].x)
-    memeNum[0].x += 5;
+    moveLineRight(num)
     drawOverlay(gImg);
     drawText();
 }
 
 function onMoveLeft(num) {
-    let memeNum = gMemes.find(meme => {
-        return num === meme[0].id
-    });
-    console.log(memeNum[0].x)
-    memeNum[0].x -= 5;
+    moveLineLeft(num);
     drawOverlay(gImg);
     drawText();
 }
 
+function onMoveUp(num) {
+    moveLineUp(num);
+    drawOverlay(gImg);
+    drawText();
+}
+
+function onMoveDown(num) {
+    moveLineDown(num);
+    drawOverlay(gImg);
+    drawText();
+}
+
+function onChangeTextFamily(th, num) {
+    changeTextFont(th.value ,num);
+    drawOverlay(gImg);
+    drawText();
+}
 
 function handleImage(ev, onImageReady) {
     let reader = new FileReader();

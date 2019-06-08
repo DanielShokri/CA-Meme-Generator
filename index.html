@@ -27,16 +27,38 @@
                 <span class="file-custom"></span>
             </label>
             <form action="" method="POST" enctype="multipart/form-data" onsubmit="uploadImg(this, event)">
-                <input name="img" id="imgData" type="hidden"/>
+                <input name="img" id="imgData" type="hidden" />
             </form>
             <div class="control-tools">
 
             </div>
             <Label>Top Line:
-                <input type="text" class="line-top"> <button onclick="onMoveRight(0)">⇨</button> <button onclick="onMoveLeft(0)">⇦</button>
+                <input type="text" placeholder="Your First Line..." class="line-top"> <button
+                    onclick="onMoveRight(0)">⇨</button> <button onclick="onMoveUp(0)">⇧</button> <button
+                    onclick="onMoveLeft(0)">⇦</button> <button onclick="onMoveDown(0)">⇩</button>
+                <label>
+                    Font Family:
+                    <select onchange="onChangeTextFamily(this, 0)" id="">
+                        <option style="font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif" value="Impact">
+                            Impact</option>
+                        <option style="font-family: Arial, Helvetica, sans-serif" value="Arial">Arial</option>
+                        <option style="font-family: natoSans;" value="natoSans">natoSans</option>
+                    </select>
+                </label>    
             </Label>
             <label>Bottom Line:
-                <input type="text" class="line-bottom"> <button onclick="onMoveRight(1)">⇨</button> <button onclick="onMoveLeft(1)">⇦</button>
+                <input type="text" placeholder="Your Second Line..." class="line-bottom"> <button
+                    onclick="onMoveRight(1)">⇨</button> <button onclick="onMoveUp(1)">⇧</button> <button
+                    onclick="onMoveLeft(1)">⇦</button> <button onclick="onMoveDown(1)">⇩</button>
+                <label>
+                    Font Family:
+                    <select onchange="onChangeTextFamily(this, 1)" id="">
+                        <option style="font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif" value="Impact">
+                            Impact</option>
+                        <option style="font-family: Arial, Helvetica, sans-serif" value="Arial">Arial</option>
+                        <option style="font-family: natoSans;" value="natoSans">natoSans</option>
+                    </select>
+                </label>
             </label>
             <label>Font size:
                 <input type="range" class="font-size" value="50" min="30" max="60">

@@ -1,10 +1,11 @@
 'use strict';
 
-let gSettings;
+let gMemes;
 
 
 function userMemesSetting() {
-    return [[createText(0,'Your Line', 150, 70)], [createText(1,'Your Line', 150, 450)]]
+    gMemes = [[createText(0, 'Your Line', 150, 70)], [createText(1, 'Your Line', 150, 450)]]
+    console.log(gMemes)
 }
 
 
@@ -21,7 +22,47 @@ function createText(id, line, x, y) {
     };
 }
 
+function getMemes() {
+    return gMemes;
+}
 
-function findMemeLine() {
-    
+function moveLineRight(num) {
+    let memeNum = gMemes.find(meme => {
+        return num === meme[0].id
+    });
+    memeNum[0].x += 5;
+}
+
+function moveLineLeft(num) {
+    let memeNum = gMemes.find(meme => {
+        return num === meme[0].id
+    });
+    memeNum[0].x -= 5;
+}
+
+function moveLineUp(num) {
+    let memeNum = gMemes.find(meme => {
+        return num === meme[0].id
+    });
+    memeNum[0].y -= 5;
+}
+
+function moveLineDown(num) {
+    let memeNum = gMemes.find(meme => {
+        return num === meme[0].id
+    });
+    memeNum[0].y += 5;
+}
+
+function changeTextFont(val, num) {
+    let memeNumObj = gMemes.find(meme => {
+        return num === meme[0].id
+    });
+    let memeNum = gMemes.findIndex(meme => {
+        return num === meme[0].id
+    });
+    console.log(memeNumObj, memeNum,val);
+
+    // gMemes[memeNum].fontFamily = val;
+    memeNumObj.fontFamily = val;
 }
