@@ -5,7 +5,7 @@ let gId = 1;
 
 function userMemesSetting() {
     gMemes = {
-        txts: [createText('Your Line', 150, 85),createText('Your Line', 165, 430)]
+        txts: [createText('Your Line', 150, 85), createText('Your Line', 165, 430)]
     }
     console.log(gMemes)
 }
@@ -21,7 +21,7 @@ function createText(line, x, y) {
         fontFamily: 'Impact',
         x: x,
         y: y
-    };
+    }
 }
 
 function getMemes() {

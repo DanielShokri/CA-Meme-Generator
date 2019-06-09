@@ -22,10 +22,9 @@ function defineCanvas() {
 
 
     gImg.onload = function () {
-        gCanvas.width = gImg.width;
-        gCanvas.height = gImg.height;
+        gCanvas.width = gImg.naturalWidth;
+        gCanvas.height = gImg.naturalHeight;
         meme.txts[1].y = gImg.height - 60;
-
         drawCanvas();
     };
     //Get random Picture on every startup
@@ -34,7 +33,7 @@ function defineCanvas() {
 
 //Render the canvas with text and img
 function drawCanvas() {
-    gCtx.drawImage(gImg, 0, 0, gImg.width, gImg.height, 0, 0, gCanvas.width, gCanvas.height);
+    gCtx.drawImage(gImg, 0, 0, gImg.naturalWidth, gImg.naturalHeight, 0, 0, gCanvas.width, gCanvas.height);
     let meme = getMemes();
     meme.txts.forEach(function (txt) {
         drawTxt(txt);
@@ -43,7 +42,7 @@ function drawCanvas() {
 
 function drawTxt(txt) {
     gCtx.beginPath();
-    gCtx.font = txt.size + 'px' + ' ' + txt.fontFamily;
+    gCtx.font = txt.size + 'px ' + txt.fontFamily;
     gCtx.textAlign = txt.align;
     gCtx.fillStyle = txt.color;
     gCtx.lineWidth = 3;
@@ -60,7 +59,7 @@ function dynamicText(elInput, txtIdx) {
     let tool = elInput.dataset.tool;
     let value;
 
-    if(elInput.type === 'select-one') value = elInput.options[elInput.selectedIndex].value;
+    if (elInput.type === 'select-one') value = elInput.options[elInput.selectedIndex].value;
     else value = elInput.value; // The Default is number and Text
 
     meme.txts[txtIdx][tool] = value;
@@ -78,7 +77,7 @@ function renderControls() {
         <i class="fas fa-text-height"></i> <input type="range" value="${txt.size}"  min="10" step="2" data-tool="size" oninput="dynamicText(this ,${idx})">
         <input type="color" class="color-input" value="${txt.color}" data-tool="color" oninput="dynamicText(this,${idx})">
 
-        
+
           <i class="fas fa-font"></i>: 
          <select data-tool="fontFamily" oninput="dynamicText(this,${idx})">
          <option style="font-family: Impact;" value="${txt.fontFamily}">${txt.fontFamily}</option>
@@ -117,8 +116,6 @@ function onAddNewLine() {
     renderControls();
 }
 
-
-
 //Get Picture from computer
 function renderCanvasImg(img) {
     gCtx.drawImage(img, 0, 0, img.width, img.height, 0, 0, gCanvas.width, gCanvas.height);
@@ -135,8 +132,8 @@ function handleImage(ev, onImageReady) {
     reader.onload = function (event) {
         img = new Image();
         img.onload = function () {
-            gCanvas.width = img.width;
-            gCanvas.height = img.height;
+            gCanvas.width = img.naturalWidth;
+            gCanvas.height = img.naturalHeight;
         }
         gImg.onload = onImageReady.bind(null, gImg)
         gImg.src = event.target.result;
@@ -151,3 +148,53 @@ function onDownloadImg(elLink, ev) {
     let imgContent = gCanvas.toDataURL('image/jpeg');
     elLink.href = imgContent;
 }
+
+//Resize the Canvas
+window.addEventListener('resize', function () {
+    gCtx.canvas.width = document.documentElement.clientWidth * 0.5;
+    gCtx.canvas.height = document.documentElement.clientHeight * 0.5;
+});
+
+
+//Facebook Share APi Code
+
+function uploadImg(elForm, ev) {
+    ev.preventDefault();
+
+    document.getElementById('imgData').value = gCanvas.toDataURL("image/jpeg");
+
+    // A function to be called if request succeeds
+    function onSuccess(uploadedImgUrl) {
+        console.log('uploadedImgUrl', uploadedImgUrl);
+
+        uploadedImgUrl = encodeURIComponent(uploadedImgUrl)
+        window.open(`https://www.facebook.com/sharer/sharer.php?u=${uploadedImgUrl}&t=${uploadedImgUrl}`)
+    }
+    doUploadImg(elForm, onSuccess);
+}
+
+function doUploadImg(elForm, onSuccess) {
+    var formData = new FormData(elForm);
+
+    fetch('http://ca-upload.com/here/upload.php', {
+        method: 'POST',
+        body: formData
+    })
+        .then(function (response) {
+            return response.text()
+        })
+        .then(onSuccess)
+        .catch(function (error) {
+            console.error(error)
+        })
+}
+
+
+// facebook api
+(function (d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = 'https://connect.facebook.net/he_IL/sdk.js#xfbml=1&version=v3.0&appId=807866106076694&autoLogAppEvents=1';
+    fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));

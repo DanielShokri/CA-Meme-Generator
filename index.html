@@ -17,15 +17,19 @@
             <h1>Meme Generator</h1>
         </nav>
     </header>
-    <!-- <button><i class="fas fa-edit"></i></button>  -->
+    <p class="github-btn"><a class="github" href="https://github.com/DanielShokri/CA-Meme-Generator">View on GitHub <i
+                class="fab fa-github"></i></a></p>
     <section class="container flex">
+
         <button onclick="onControlOpen()" class="btn btn-outline-primary control-btn"><i
                 class="fas fa-edit"></i></button>
+
         <div class="canvas-contariner">
             <canvas id="my-canvas" width="500" height="504">
                 Update your browser to enjoy canvas!
             </canvas>
         </div>
+
         <section class="control-section">
             <h2>Controls</h2>
             <div class="form-group">
@@ -37,17 +41,19 @@
                     </div>
                 </div>
             </div>
-            <!-- <label class="file">
-                <input type="file" name="image" id="file" onchange="onFileInputChange(event)" />
-                <span class="file-custom"></span>
-            </label> -->
 
             <div class="control-tools">
-
+                <!-- Tools Render Here -->
             </div>
-            <button class="btn btn-outline-primary" onclick="onAddNewLine()">Add new line</button>
-            <a class="btn btn-outline-primary" class="save-img" onclick="onDownloadImg(this, event)"
+            <button class="btn btn-outline-primary new-line-btn" onclick="onAddNewLine()">Add New Line <i
+                    class="fas fa-grip-lines"></i></button>
+            <a class="btn btn-outline-primary save-img" class="save-img" onclick="onDownloadImg(this, event)"
                 download="my-img.jpg">Save Image <i class="fas fa-cloud-download-alt"></i></a>
+            <form action="" method="POST" enctype="multipart/form-data" onsubmit="uploadImg(this, event)">
+                <input name="img" id="imgData" type="hidden" />
+                <button class="btn fb-share-btn" type="submit">Share on Facebook <i
+                        class="fab fa-facebook-square"></i></button>
+            </form>
         </section>
     </section>
     <footer>
