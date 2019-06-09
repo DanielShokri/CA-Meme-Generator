@@ -5,7 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <script data-search-pseudo-elements src="https://kit.fontawesome.com/468f3017f2.js"></script>
+    <link rel="stylesheet" href="lib/bootstrap.min.css">
+    <script src="https://kit.fontawesome.com/468f3017f2.js"></script>
     <link rel="stylesheet" href="css/main.css">
     <title>Meme Generator | Create Your Own Meme</title>
 </head>
@@ -16,63 +17,42 @@
             <h1>Meme Generator</h1>
         </nav>
     </header>
-
+    <!-- <button><i class="fas fa-edit"></i></button>  -->
     <section class="container flex">
-        <canvas id="my-canvas" width="500" height="500">
-            Update your browser to enjoy canvas!
-        </canvas>
+        <button onclick="onControlOpen()" class="btn btn-outline-primary control-btn"><i
+                class="fas fa-edit"></i></button>
+        <div class="canvas-contariner">
+            <canvas id="my-canvas" width="500" height="504">
+                Update your browser to enjoy canvas!
+            </canvas>
+        </div>
         <section class="control-section">
-            <h2>Controls</h2><label class="file">
+            <h2>Controls</h2>
+            <div class="form-group">
+                <div class="input-group mb-3">
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="inputGroupFile02"
+                            onchange="onFileInputChange(event)">
+                        <label class="custom-file-label" for="inputGroupFile02">Choose file</label>
+                    </div>
+                </div>
+            </div>
+            <!-- <label class="file">
                 <input type="file" name="image" id="file" onchange="onFileInputChange(event)" />
                 <span class="file-custom"></span>
-            </label>
-            <form action="" method="POST" enctype="multipart/form-data" onsubmit="uploadImg(this, event)">
-                <input name="img" id="imgData" type="hidden" />
-            </form>
+            </label> -->
+
             <div class="control-tools">
 
             </div>
-            <Label>Top Line:
-                <input type="text" placeholder="Your First Line..." class="line-top"> <button
-                    onclick="onMoveRight(0)">⇨</button> <button onclick="onMoveUp(0)">⇧</button> <button
-                    onclick="onMoveLeft(0)">⇦</button> <button onclick="onMoveDown(0)">⇩</button>
-                <label>
-                    Font Family:
-                    <select onchange="onChangeTextFamily(this, 0)" id="">
-                        <option style="font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif" value="Impact">
-                            Impact</option>
-                        <option style="font-family: Arial, Helvetica, sans-serif" value="Arial">Arial</option>
-                        <option style="font-family: natoSans;" value="natoSans">natoSans</option>
-                    </select>
-                </label>    
-            </Label>
-            <label>Bottom Line:
-                <input type="text" placeholder="Your Second Line..." class="line-bottom"> <button
-                    onclick="onMoveRight(1)">⇨</button> <button onclick="onMoveUp(1)">⇧</button> <button
-                    onclick="onMoveLeft(1)">⇦</button> <button onclick="onMoveDown(1)">⇩</button>
-                <label>
-                    Font Family:
-                    <select onchange="onChangeTextFamily(this, 1)" id="">
-                        <option style="font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif" value="Impact">
-                            Impact</option>
-                        <option style="font-family: Arial, Helvetica, sans-serif" value="Arial">Arial</option>
-                        <option style="font-family: natoSans;" value="natoSans">natoSans</option>
-                    </select>
-                </label>
-            </label>
-            <label>Font size:
-                <input type="range" class="font-size" value="50" min="30" max="60">
-            </label>
-            <label>Color:
-                <input type="color" class="user-color" value="#ff0000">
-            </label>
-            <a class="save-img" onclick="onDownloadImg(this, event)" download="my-img.jpg">Save Image ⇓</a>
-            <!-- <button onclick="onAddLine()">Add Line</!-->
-            <div class="render-line">
-                <!-- Rendering new line -->
-                <!-- </div> -->
+            <button class="btn btn-outline-primary" onclick="onAddNewLine()">Add new line</button>
+            <a class="btn btn-outline-primary" class="save-img" onclick="onDownloadImg(this, event)"
+                download="my-img.jpg">Save Image <i class="fas fa-cloud-download-alt"></i></a>
         </section>
     </section>
+    <footer>
+        <p>Daniel Shokri ©</p>
+    </footer>
 
     <script src="js/generator-utils.js"></script>
     <script src="js/generator-service.js"></script>

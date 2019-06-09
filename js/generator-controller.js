@@ -7,29 +7,119 @@ let gImg;
 
 function onInit() {
     gImg = new Image();
+    //Avoid difficulty with image download
     gImg.crossOrigin = "Anonymous";
+    userMemesSetting();
     defineCanvas();
-    userMemesSetting();    
-    drawPlaceholder();
+    renderControls();
 }
 
 function defineCanvas() {
     gCanvas = document.querySelector('#my-canvas');
     gCtx = gCanvas.getContext('2d');
-}
+    let meme = getMemes();
+    console.log(meme);
 
 
-
-function drawPlaceholder() {
     gImg.onload = function () {
-        drawOverlay(gImg);
-        drawText();
-        dynamicText(gImg);
+        gCanvas.width = gImg.width;
+        gCanvas.height = gImg.height;
+        meme.txts[1].y = gImg.height - 60;
+
+        drawCanvas();
     };
-    //Get random Picture every startup
+    //Get random Picture on every startup
     gImg.src = 'https://loremflickr.com/500/500/funny';
 }
 
+//Render the canvas with text and img
+function drawCanvas() {
+    gCtx.drawImage(gImg, 0, 0, gImg.width, gImg.height, 0, 0, gCanvas.width, gCanvas.height);
+    let meme = getMemes();
+    meme.txts.forEach(function (txt) {
+        drawTxt(txt);
+    });
+}
+
+function drawTxt(txt) {
+    gCtx.beginPath();
+    gCtx.font = txt.size + 'px' + ' ' + txt.fontFamily;
+    gCtx.textAlign = txt.align;
+    gCtx.fillStyle = txt.color;
+    gCtx.lineWidth = 3;
+    gCtx.fillText(txt.line, txt.x, txt.y);
+    gCtx.strokeText(txt.line, txt.x, txt.y);
+}
+
+
+
+
+//Change the text dynamically based on the data-attributes
+function dynamicText(elInput, txtIdx) {
+    let meme = getMemes();
+    let tool = elInput.dataset.tool;
+    let value;
+
+    if(elInput.type === 'select-one') value = elInput.options[elInput.selectedIndex].value;
+    else value = elInput.value; // The Default is number and Text
+
+    meme.txts[txtIdx][tool] = value;
+    drawCanvas();
+}
+
+//Render set's of control each line
+function renderControls() {
+    let meme = getMemes();
+    let strHtml = meme.txts.map(function (txt, idx) {
+        return `
+        <div class="control-text">
+        <button class="line-delete" onclick="onDeleteText(${idx})"><i class="fas trash fa-trash-alt"></i></button>
+        <input type="text" data-tool="line" placeholder="${txt.line}" oninput="dynamicText(this,${idx})"/>
+        <i class="fas fa-text-height"></i> <input type="range" value="${txt.size}"  min="10" step="2" data-tool="size" oninput="dynamicText(this ,${idx})">
+        <input type="color" class="color-input" value="${txt.color}" data-tool="color" oninput="dynamicText(this,${idx})">
+
+        
+          <i class="fas fa-font"></i>: 
+         <select data-tool="fontFamily" oninput="dynamicText(this,${idx})">
+         <option style="font-family: Impact;" value="${txt.fontFamily}">${txt.fontFamily}</option>
+         <option style="font-family: Tahoma;" value="Tahoma">Tahoma</option>
+         <option style="font-family: lobster;" value="lobster">Lobster</option>
+         <option value="Verdana">Verdana</option>
+         </select>
+
+         <i class="fas fa-arrows-alt-h"></i> <input type="number" class="left-right-input" value="${txt.x}"  min="0" step="5" data-tool="x" oninput="dynamicText(this ,${idx})">
+         <i class="fas fa-arrows-alt-v"></i> <input type="number" class="left-right-input" value="${txt.y}"  min="0" step="5" data-tool="y" oninput="dynamicText(this ,${idx})">
+
+         <select data-tool="align" oninput="dynamicText(this,${idx})">
+         <option value="left">left</option>
+         <option value="center">center</option>
+         <option value="right">right</option>
+          </select>
+
+            </div>`
+    })
+    document.querySelector('.control-tools').innerHTML = strHtml.join(' ');
+}
+
+function onControlOpen() {
+    document.querySelector('.control-section').classList.toggle('transform-control');
+}
+
+function onDeleteText(textIdx) {
+    deleteText(textIdx);
+    drawCanvas();
+    renderControls();
+}
+
+function onAddNewLine() {
+    addNewLine();
+    drawCanvas();
+    renderControls();
+}
+
+
+
+//Get Picture from computer
 function renderCanvasImg(img) {
     gCtx.drawImage(img, 0, 0, img.width, img.height, 0, 0, gCanvas.width, gCanvas.height);
 }
@@ -38,86 +128,7 @@ function onFileInputChange(ev) {
     handleImage(ev, renderCanvasImg)
 }
 
-function drawOverlay(img) {
-    gCtx.drawImage(img, 0, 0, img.width, img.height, 0, 0, gCanvas.width, gCanvas.height);
-    gCtx.fillStyle = 'rgba(50, 144, 255, 0.01)';
-}
-
-function drawText() {
-    let meme = getMemes();
-    
-    gCtx.beginPath();
-    gCtx.textAlign = "left";
-    gCtx.font = meme.size + 'px ' + meme[0].fontFamily;
-    
-    gCtx.lineWidth = 6;
-    gCtx.fillStyle = meme.color;
-
-    gCtx.strokeText(meme[0][0].line, meme[0][0].x, meme[0][0].y);
-    gCtx.fillText(meme[0][0].line, meme[0][0].x, meme[0][0].y);
-    
-    gCtx.strokeText(meme[1][0].line, meme[1][0].x, meme[1][0].y);
-    gCtx.fillText(meme[1][0].line, meme[1][0].x, meme[1][0].y);
-}
-
-
-function dynamicText(img) {
-    let meme = getMemes();
-    document.querySelector('.line-top').addEventListener('keydown', function () {
-        meme[0][0].line = this.value;
-        drawOverlay(img);
-        gCtx.fillText(meme[0][0].line, 70, 70);
-        drawText();
-    });
-    document.querySelector('.line-bottom').addEventListener('keydown', function () {
-        meme[1][0].line = this.value;
-        drawOverlay(img);
-        gCtx.fillText(meme[1][0].line, 70, 70);
-        drawText();
-    });
-    document.querySelector('.font-size').addEventListener('input', function () {
-        meme.size = document.querySelector('.font-size').value;
-        drawOverlay(img);
-        drawText();
-    });
-    document.querySelector('.user-color').addEventListener('change', function () {
-        meme.color = document.querySelector('.user-color').value;
-        drawOverlay(img);
-        drawText();
-    });
-}
-
-
-function onMoveRight(num) {
-    moveLineRight(num)
-    drawOverlay(gImg);
-    drawText();
-}
-
-function onMoveLeft(num) {
-    moveLineLeft(num);
-    drawOverlay(gImg);
-    drawText();
-}
-
-function onMoveUp(num) {
-    moveLineUp(num);
-    drawOverlay(gImg);
-    drawText();
-}
-
-function onMoveDown(num) {
-    moveLineDown(num);
-    drawOverlay(gImg);
-    drawText();
-}
-
-function onChangeTextFamily(th, num) {
-    changeTextFont(th.value ,num);
-    drawOverlay(gImg);
-    drawText();
-}
-
+//Handel the img uploaded from the computer
 function handleImage(ev, onImageReady) {
     let reader = new FileReader();
     let img = "";
@@ -126,18 +137,15 @@ function handleImage(ev, onImageReady) {
         img.onload = function () {
             gCanvas.width = img.width;
             gCanvas.height = img.height;
-            // gCtx.drawImage(img, 0, 0);
         }
         gImg.onload = onImageReady.bind(null, gImg)
         gImg.src = event.target.result;
 
-        drawOverlay(img);
-        drawText();
-        dynamicText(img);
     }
     reader.readAsDataURL(ev.target.files[0]);
 }
 
+//Download canvas as .jpg
 function onDownloadImg(elLink, ev) {
     ev.stopPropagation();
     let imgContent = gCanvas.toDataURL('image/jpeg');
