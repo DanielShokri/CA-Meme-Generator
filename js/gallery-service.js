@@ -17,7 +17,6 @@ function createImgs() {
         createImg('/meme-imgs/One-Does-Not-Simply.jpg', ['happy'], 'Precise'),
         createImg('/meme-imgs/meme1.jpg', ['happy'], 'Matrix'),
     ];
-    console.log(gImgs);
 }
 
 function createImg(url, keyword, desc) {

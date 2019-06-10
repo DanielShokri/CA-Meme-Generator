@@ -7,7 +7,6 @@ function userMemesSetting() {
     gMemes = {
         txts: [createText('Your Line', 150, 85), createText('Your Line', 165, 430)]
     }
-    console.log(gMemes)
 }
 
 
