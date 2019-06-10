@@ -40,3 +40,14 @@ function doUploadImg(elForm, onSuccess) {
     js.src = 'https://connect.facebook.net/he_IL/sdk.js#xfbml=1&version=v3.0&appId=807866106076694&autoLogAppEvents=1';
     fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));
+
+
+//Save to local storage
+
+function saveToStorage(key, value) {
+    var strValue = JSON.stringify(value);
+    localStorage.setItem(key, strValue);
+  }
+  function loadFromStorage(key) {
+    return JSON.parse(localStorage.getItem(key))
+  }

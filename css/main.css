@@ -59,7 +59,7 @@ nav {
 
 .container {
     max-width: 980px;
-    margin: 50px auto 5px;
+    margin: 16px auto 5px;
     z-index: 3;
 }
 
@@ -68,7 +68,7 @@ nav {
 }
 
 .control-section {
-    transform: translate(-415px, 0);
+    transform: translate(0, 0);
     z-index: 0;
     display: flex;
     flex-direction: column;
@@ -83,7 +83,7 @@ nav {
 }
 
 .transform-control {
-    transform: translate(0, 0);
+    transform: translate(-425px, 0);
 }
 
 .control-btn {
@@ -112,6 +112,11 @@ nav {
 .github:hover {
     text-decoration: none;
     color: #000;
+}
+
+.gallery-link{
+    margin: 20px 0 0;
+    text-align: center;
 }
 
 /* Canvas */

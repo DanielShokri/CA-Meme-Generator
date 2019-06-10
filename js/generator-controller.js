@@ -3,10 +3,12 @@
 let gCanvas;
 let gCtx;
 let gImg;
-
+let gImgIdx;
 
 function onInit() {
+    gImgIdx = loadFromStorage('img');
     gImg = new Image();
+    gImg.src = gImgIdx.url;
     //Avoid difficulty with image download
     gImg.crossOrigin = "Anonymous";
     userMemesSetting();
@@ -18,15 +20,13 @@ function defineCanvas() {
     gCanvas = document.querySelector('#my-canvas');
     gCtx = gCanvas.getContext('2d');
     let meme = getMemes();
-
+    
     gImg.onload = function () {
-        gCanvas.width = gImg.naturalWidth;
-        gCanvas.height = gImg.naturalHeight;
-        meme.txts[1].y = gImg.height - 60;
+        gCanvas.width = 500;
+        gCanvas.height = 500;
+        meme.txts[1].y =  470;
         drawCanvas();
     };
-    //Get random Picture on every startup
-    gImg.src = 'https://picsum.photos/500/500';
 }
 
 //Render the canvas with text and img
