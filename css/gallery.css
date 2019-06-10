@@ -1,0 +1,170 @@
+/* Global Setting */
+
+
+
+html, body {
+    height: 100%;
+    width: 100%;
+    position: relative;
+}
+
+/* Font Face */
+
+@font-face {
+    font-family: lobster;
+    src: url(../fonts/Lobster/Lobster-Regular.ttf);
+}
+
+@font-face {
+    font-family: Oswald;
+    src: url(../fonts/Oswald/Oswald.ttf);
+}
+
+
+/* header */
+
+h1 {
+    margin: 0;
+    color: #fff;
+    padding: 10px;
+    font-family: lobster;
+    text-align: center;
+    color: #FFFFFF;
+    text-shadow: 0 1px 0 #CCCCCC, 0 2px 0 #c9c9c9, 0 3px 0 #bbb, 0 4px 0 #b9b9b9, 0 5px 0 #aaa, 0 6px 1px rgba(0, 0, 0, .1), 0 0 5px rgba(0, 0, 0, .1), 0 1px 3px rgba(0, 0, 0, .3), 0 3px 5px rgba(0, 0, 0, .2), 0 5px 10px rgba(0, 0, 0, .25), 0 10px 10px rgba(0, 0, 0, .2), 0 20px 20px rgba(0, 0, 0, .15);
+}
+
+nav {
+    min-width: 100%;
+    background: linear-gradient(to right, #485563, #29323c);
+    min-height: 60px;
+    box-shadow: 0px 10px 13px -7px #000000, 5px 5px 15px 5px rgba(0, 0, 0, 0);
+}
+
+.github-btn {
+    margin: 25px auto 0;
+    background-color: #272b30;
+    width: 138px;
+    border: 1px solid #FFF;
+    border-radius: 5px;
+    padding: 4px;
+}
+
+.github-btn:hover {
+    background-color: #fff;
+}
+
+.github {
+    width: 160px;
+}
+
+.github:hover {
+    text-decoration: none;
+    color: #000;
+}
+
+/* Gallery */
+
+#rig {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0;
+    font-size: 0;
+    list-style: none;
+}
+
+#rig li {
+    display: inline-block;
+    *display: inline;
+}
+
+/* The wrapper for each item */
+
+.rig-cell {
+    margin:12px;
+    box-shadow:0 0 6px rgba(0,0,0,0.3);
+    display: block;
+    position: relative;
+    overflow: hidden;
+}
+
+/* If have the image layer */
+
+.rig-img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border: none;
+    transform: scale(1);
+    transition: all 1s;
+}
+
+#rig li:hover .rig-img {
+    transform: scale(1.05);
+}
+
+/* If have the overlay layer */
+
+.rig-overlay {
+    position: absolute;
+    display: block;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    margin: auto;
+    background-size: 50px 50px;
+    opacity: 0;
+    filter: alpha(opacity=0);
+    /*For IE6 - IE8*/
+    transition: all 0.6s;
+}
+
+#rig li:hover .rig-overlay {
+    opacity: 0.8;
+}
+
+/* If have captions */
+
+.rig-text {
+    display: block;
+    padding: 0 30px;
+    box-sizing: border-box;
+    position: absolute;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    text-transform: capitalize;
+    font-size: 18px;
+    font-weight: bold;
+    font-family: Oswald, sans-serif;
+    top: 40%;
+    color: white;
+    opacity: 0;
+    filter: alpha(opacity=0);
+    /*For older IE*/
+    transform: translateY(-20px);
+    transition: all .3s;
+}
+
+#rig li:hover .rig-text {
+    transform: translateY(0px);
+    opacity: 0.9;
+}
+
+@media (max-width: 9000px) {
+    #rig li {
+        width: 25%;
+    }
+}
+
+@media (max-width: 700px) {
+    #rig li {
+        width: 33.33%;
+    }
+}
+
+@media (max-width: 550px) {
+    #rig li {
+        width: 50%;
+    }
+}
