@@ -8,7 +8,7 @@ let gId = 1;
 
 function createImgs() {
     gImgs = [
-        createImg('/meme-imgs/2.jpg', ['happy'], 'Happy Women'),
+        createImg('meme-imgs/2.jpg', ['happy'], 'Happy Women'),
         createImg('/meme-imgs/003.jpg', ['happy'], 'Donald Trump'),
         createImg('/meme-imgs/004.jpg', ['happy'], 'Puppies'),
         createImg('/meme-imgs/005.jpg', ['happy'], 'Puppy and Baby'),
