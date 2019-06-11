@@ -8,7 +8,8 @@ let gImgIdx;
 function onInit() {
     gImgIdx = loadFromStorage('img');
     gImg = new Image();
-    gImg.src = gImgIdx.url;
+    if (!gImgIdx) gImg.src = 'meme-imgs/003.jpg';
+    else gImg.src = gImgIdx.url;
     //Avoid difficulty with image download
     gImg.crossOrigin = "Anonymous";
     userMemesSetting();
@@ -20,11 +21,11 @@ function defineCanvas() {
     gCanvas = document.querySelector('#my-canvas');
     gCtx = gCanvas.getContext('2d');
     let meme = getMemes();
-    
+
     gImg.onload = function () {
         gCanvas.width = 500;
         gCanvas.height = 500;
-        meme.txts[1].y =  470;
+        meme.txts[1].y = 470;
         drawCanvas();
     };
 }
