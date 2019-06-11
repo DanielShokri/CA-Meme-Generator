@@ -132,7 +132,6 @@ function handleImage(ev, onImageReady) {
         }
         gImg.onload = onImageReady.bind(null, gImg)
         gImg.src = event.target.result;
-
     }
     reader.readAsDataURL(ev.target.files[0]);
 }
@@ -144,10 +143,5 @@ function onDownloadImg(elLink, ev) {
     elLink.href = imgContent;
 }
 
-//Resize the Canvas
-window.addEventListener('resize', function () {
-    gCtx.canvas.width = document.documentElement.clientWidth * 0.5;
-    gCtx.canvas.height = document.documentElement.clientHeight * 0.5;
-});
 
 

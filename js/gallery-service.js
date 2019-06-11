@@ -37,6 +37,5 @@ function getImgById(id) {
         return img.id === id
     });
     console.log(imgIdx);
-    
     saveToStorage('img', imgIdx);
 }
