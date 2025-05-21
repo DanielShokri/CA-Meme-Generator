@@ -207,6 +207,30 @@ canvas {
 
 .color-input {
     width: 60px;
+    vertical-align: middle; /* Align color inputs with labels */
+    margin-left: 5px; /* Add some space after the label */
+}
+
+.control-text label {
+    color: #FFF; /* Make labels visible */
+    font-size: 0.9em; /* Slightly smaller font for labels */
+    margin-left: 8px; /* Space before label */
+    margin-right: 3px; /* Space after label */
+    vertical-align: middle;
+}
+
+/* Specific styling for stroke width range input */
+.control-text input[type="range"][data-tool="strokeWidth"] {
+    width: 80px; /* Adjust width as needed */
+    vertical-align: middle;
+    margin-left: 5px; /* Add some space after the label */
+}
+
+/* General adjustments for inputs within control-text for tighter packing */
+.control-text input,
+.control-text select {
+    margin-top: 5px;
+    margin-bottom: 5px;
 }
 
 .fb-share-btn {
@@ -229,8 +253,9 @@ canvas {
     padding-top: 2px;
 }
 
-.text-input{
+.text-input {
     padding: 6px;
+    vertical-align: middle; /* Align text input with other controls */
 }
 
 /* Footer */

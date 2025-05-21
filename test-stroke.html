@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stroke Test</title>
+    <style>
+        body { display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; background-color: #f0f0f0; }
+        canvas { border: 1px solid black; }
+    </style>
+</head>
+<body>
+    <canvas id="test-canvas" width="500" height="500"></canvas>
+
+    <script src="js/generator-utils.js"></script>
+    <script src="js/generator-service.js"></script>
+    <script src="js/generator-controller.js"></script>
+    <script>
+        // Mock gImg for drawCanvas to work without actual image loading if needed
+        // or ensure drawCanvas is robust enough.
+        // For this test, we will simulate a simple image background.
+        gImg = {
+            naturalWidth: 500,
+            naturalHeight: 500,
+            // A simple placeholder to avoid errors if drawImage is called directly
+            // In our case, drawImage in drawCanvas will use this.
+            // We'll also draw a background in the test script itself.
+        };
+
+        function testStrokeFeature() {
+            // 1. Initialize environment (simplified onInit)
+            userMemesSetting(); // Initializes gMemes
+
+            // Redefine gCanvas and gCtx for this test page, as onInit() from controller might not target 'test-canvas'
+            gCanvas = document.getElementById('test-canvas');
+            if (!gCanvas) {
+                console.error('Test canvas not found!');
+                return;
+            }
+            gCtx = gCanvas.getContext('2d');
+
+            // Draw a simple background for the test
+            gCtx.fillStyle = 'lightgray';
+            gCtx.fillRect(0, 0, gCanvas.width, gCanvas.height);
+
+            let firstText = getMemes().txts[0];
+            if (!firstText) {
+                console.error('No first text line found in gMemes.');
+                return;
+            }
+
+            // 2. Draw initial text (optional, to see "before" state if desired, but drawCanvas will do it)
+            // For simplicity, we'll let the first drawCanvas handle initial drawing.
+
+            // 3. Programmatically update strokeColor and strokeWidth for the first text line
+            console.log('Updating stroke properties for the first text line...');
+            firstText.strokeColor = '#FF0000'; // Red
+            firstText.strokeWidth = 5;
+
+            // 4. Call drawCanvas() to reflect changes
+            // Ensure drawCanvas uses the gMemes modified above.
+            // drawCanvas internally gets gMemes via getMemes()
+            console.log('Calling drawCanvas() to apply changes...');
+            drawCanvas(); // This will draw the image (mocked here) and all texts
+
+            // 5. Log completion message
+            console.log(`Test complete. Stroke color for first line set to: ${firstText.strokeColor}, stroke width to: ${firstText.strokeWidth}. Please visually inspect the canvas.`);
+            console.log('The first text line should now have a red stroke of width 5.');
+        }
+
+        // Run the test after the page loads and scripts are parsed
+        window.onload = testStrokeFeature;
+    </script>
+</body>
+</html>
