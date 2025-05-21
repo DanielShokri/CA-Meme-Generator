@@ -18,6 +18,8 @@ function createText(line, x, y) {
         align: 'left',
         color: '#FFFFFF',
         fontFamily: 'Impact',
+        strokeColor: '#000000',
+        strokeWidth: 1,
         x: x,
         y: y
     }

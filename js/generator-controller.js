@@ -44,8 +44,11 @@ function drawTxt(txt) {
     gCtx.font = txt.size + 'px ' + txt.fontFamily;
     gCtx.textAlign = txt.align;
     gCtx.fillStyle = txt.color;
-    gCtx.lineWidth = 3;
+    gCtx.lineWidth = 3; // This might be for the fillText "border" effect, or a leftover. Task specifies strokeWidth for strokeText.
     gCtx.fillText(txt.line, txt.x, txt.y);
+
+    gCtx.strokeStyle = txt.strokeColor;
+    gCtx.lineWidth = txt.strokeWidth;
     gCtx.strokeText(txt.line, txt.x, txt.y);
 }
 
@@ -71,8 +74,9 @@ function renderControls() {
         <button class="line-delete" onclick="onDeleteText(${idx})"><i class="fas trash fa-trash-alt"></i></button>
         <input class="text-input" type="text" data-tool="line" placeholder="${txt.line}" oninput="dynamicText(this,${idx})"/>
         <i class="fas fa-text-height"></i> <input type="range" value="${txt.size}"  min="10" step="2" data-tool="size" oninput="dynamicText(this ,${idx})">
-        <input type="color" class="color-input" value="${txt.color}" data-tool="color" oninput="dynamicText(this,${idx})">
-
+        <label for="fillColor">Fill:</label><input type="color" id="fillColor" class="color-input" value="${txt.color}" data-tool="color" oninput="dynamicText(this,${idx})">
+        <label for="strokeColor">Stroke:</label><input type="color" id="strokeColor" class="color-input" value="${txt.strokeColor}" data-tool="strokeColor" oninput="dynamicText(this,${idx})">
+        <label for="strokeWidth">Stroke Width:</label><input type="range" id="strokeWidth" value="${txt.strokeWidth}"  min="0" max="10" step="1" data-tool="strokeWidth" oninput="dynamicText(this ,${idx})">
 
           <i class="fas fa-font"></i>: 
          <select data-tool="fontFamily" oninput="dynamicText(this,${idx})">
